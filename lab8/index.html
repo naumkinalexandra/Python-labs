@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Добро пожаловать в {{ app_name }}!</h2>
+    <p>Это простое клиент-серверное приложение, созданное для отслеживания актуальных курсов валют, предоставляемых Центральным банком РФ.</p>
+    
+    <h3>Информация о приложении</h3>
+    <ul>
+        <li>Название: <strong>{{ app_name }}</strong></li>
+        <li>Версия: <strong>{{ app.version }}</strong></li>
+        <li>Автор: <a href="/author">{{ author_name }}</a></li>
+    </ul>
+
+    <p>Используемые технологии: Python, Jinja2, стандартный модуль http.server.</p>
+    
+    <div class="cta-buttons">
+        <a href="/currencies" class="button">Посмотреть курсы валют</a>
+        <a href="/users" class="button secondary">Посмотреть пользователей</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Профиль пользователя: {{ current_user.name }}</h2>
+    <p>Уникальный ID: <strong>{{ current_user.id }}</strong></p>
+    
+    <h3>Подписки на валюты:</h3>
+    
+    {% if subscriptions %}
+        <table class="subscriptions-table">
+            <thead>
+                <tr>
+                    <th>Код</th>
+                    <th>Название</th>
+                    <th>Номинал</th>
+                    <th>Курс к RUB</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for currency in subscriptions %}
+                <tr>
+                    <td>{{ currency.char_code }}</td>
+                    <td>{{ currency.name }}</td>
+                    <td>{{ currency.nominal }}</td>
+                    <td>{{ currency.value | round(4) }} RUB</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Пользователь не подписан ни на одну валюту.</p>
+    {% endif %}
+    
+    {% block user_scripts %}{% endblock %}
+
+{% endblock %}

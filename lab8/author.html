@@ -1,0 +1,15 @@
+% extends "base.html" %}
+
+{% block content %}
+    <h2>Информация об авторе</h2>
+
+    <div class="author-card">
+        <p><strong>Имя автора:</strong> {{ author.name }}</p>
+        <p><strong>Учебная группа:</strong> {{ author.group }}</p>
+        <hr>
+        <h3>О проекте</h3>
+        <p><strong>Название приложения:</strong> {{ app.name }}</p>
+        <p><strong>Версия:</strong> {{ app.version }}</p>
+    </div>
+
+{% endblock %}

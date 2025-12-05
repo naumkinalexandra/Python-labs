@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ page_title }} | {{ app.name }}</title>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <header>
+        <h1>{{ app.name }} <small>v{{ app.version }}</small></h1>
+        <nav>
+            <ul>
+                {% for item in navigation %}
+                    <li {% if item.active %}class="active"{% endif %}>
+                        <a href="{{ item.href }}">{{ item.caption }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+            {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2025 {{ app.name }} | Автор: <a href="/author">{{ app.author.name }}</a></p>
+    </footer>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

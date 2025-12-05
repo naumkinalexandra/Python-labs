@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Актуальные курсы валют ЦБ РФ</h2>
+    <p>Курсы обновляются при каждой загрузке этой страницы.</p>
+    
+    {% if currencies_list %}
+        <table class="currencies-table">
+            <thead>
+                <tr>
+                    <th>Код</th>
+                    <th>Название</th>
+                    <th>Номинал</th>
+                    <th>Курс к RUB</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for currency in currencies_list %}
+                <tr>
+                    <td><strong>{{ currency.char_code }}</strong></td>
+                    <td>{{ currency.name }}</td>
+                    <td>{{ currency.nominal }}</td>
+                    <td>{{ currency.value | round(4) }} RUB</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="error-message">Не удалось загрузить курсы валют. Проверьте соединение с API.</p>
+    {% endif %}
+{% endblock %}
