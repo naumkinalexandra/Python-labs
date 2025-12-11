@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2>Пользователи (CRUD)</h2>
+
+    <h3>Создать нового пользователя</h3>
+    <form method="POST" action="/user/create">
+        <label for="name">Имя:</label>
+        <input type="text" id="name" name="name" required>
+        <button type="submit">Создать</button>
+    </form>
+    <hr>
+
+    {% if users %}
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Имя</th>
+                <th>Действия</th>
+            </tr>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>
+                        <form method="POST" action="/user/update" style="display: inline;">
+                            <input type="hidden" name="id" value="{{ user.id }}">
+                            <input type="text" name="name" value="{{ user.name }}" required>
+                            <button type="submit">Обновить</button>
+                        </form>
+                    </td>
+                    <td>
+                        <a href="/user?id={{ user.id }}">Подписки</a> |
+                        <a href="/user/delete?id={{ user.id }}" onclick="return confirm('Удалить пользователя {{ user.name }}?');">Удалить</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>Пользователей пока нет.</p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2>Валюты (CRUD)</h2>
+
+    {% if update_message %}
+        <div class="message {{ 'success' if update_success else 'error' }}">
+            {{ update_message }}
+        </div>
+    {% endif %}
+
+    <p><a href="/update-currencies">Обновить курсы валют (имитация API)</a></p>
+
+    <h3>Создать новую валюту</h3>
+    <form method="POST" action="/currency/create">
+        <input type="text" name="num_code" placeholder="Код (пр. 826)" required size="10">
+        <input type="text" name="char_code" placeholder="Симв. код (пр. GBP)" required size="10">
+        <input type="text" name="name" placeholder="Название (пр. Фунт)" required size="15">
+        <input type="number" name="value" placeholder="Курс (пр. 95.0000)" step="0.0001" required size="10">
+        <input type="number" name="nominal" placeholder="Номинал (пр. 1)" required size="10">
+        <button type="submit">Создать</button>
+    </form>
+    <hr>
+
+    {% if currencies %}
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Код</th>
+                <th>Название</th>
+                <th>Номинал</th>
+                <th>Курс к рублю</th>
+                <th>Действия</th>
+            </tr>
+            {% for currency in currencies %}
+                <tr>
+                    <td>{{ currency.id }}</td>
+                    <form method="POST" action="/currency/update" style="display: contents;">
+                        <input type="hidden" name="id" value="{{ currency.id }}">
+                        <td><input type="text" name="num_code" value="{{ currency.num_code }}" required size="5"></td>
+                        <td>
+                            <input type="text" name="char_code" value="{{ currency.char_code }}" required size="5">
+                            <input type="text" name="name" value="{{ currency.name }}" required>
+                        </td>
+                        <td><input type="number" name="nominal" value="{{ currency.nominal }}" required size="5"></td>
+                        <td><input type="number" name="value" value="{{ "%.4f"|format(currency.value) }}" step="0.0001" required size="10"></td>
+                        <td>
+                            <button type="submit">Обновить</button>
+                            <a href="/currency/delete?id={{ currency.id }}" onclick="return confirm('Удалить валюту {{ currency.char_code }}?');">Удалить</a>
+                        </td>
+                    </form>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>Валют пока нет.</p>
+    {% endif %}
+{% endblock %}
